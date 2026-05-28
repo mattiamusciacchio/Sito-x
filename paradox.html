@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Travel Bureau - Paradossi</title>
+    <style>
+        :root {
+            --neon-red: #ff3366;
+            --dark-bg: #0a0f0d;
+            --panel-bg: #111a16;
+            --text-color: #c8f5df;
+        }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        nav {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-around;
+            background: var(--panel-bg);
+            padding: 15px;
+            border: 2px solid var(--neon-red);
+            margin-bottom: 30px;
+        }
+        nav a {
+            color: var(--neon-red);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        nav a.active {
+            text-shadow: 0 0 8px var(--neon-red);
+            border-bottom: 2px solid var(--neon-red);
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 51, 102, 0.3);
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--neon-red);
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .form-box {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border: 1px solid rgba(255, 51, 102, 0.2);
+            margin-top: 20px;
+        }
+        select, button {
+            background: #000;
+            color: var(--text-color);
+            border: 1px solid var(--neon-red);
+            padding: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--neon-red);
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: var(--neon-red);
+            color: #000;
+        }
+        #result-panel {
+            margin-top: 25px;
+            padding: 15px;
+            border-left: 4px solid var(--neon-red);
+            background: rgba(255, 51, 102, 0.05);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Terminale</a>
+        <a href="epochs.html">Destinazioni</a>
+        <a href="paradox.html" class="active">Simulatore Paradossi</a>
+    </nav>
+
+    <div class="container">
+        <h1>SIMULATORE DI COLLASSO QUANTISTICO</h1>
+        <p>Inserisci l'azione che intendi compiere nel passato per calcolare l'indice di rischio di generazione di un paradosso distruttivo.</p>
+        
+        <div class="form-box">
+            <label>Azione pianificata:</label>
+            <select id="action">
+                <option value="1">Investire in azioni Apple nel 1980</option>
+                <option value="2">Incontrare i tuoi genitori da giovani</option>
+                <option value="3">Insegnare la matematica moderna agli antichi egizi</option>
+                <option value="4">Comprare un souvenir autentico e portarlo nel presente</option>
+            </select>
+
+            <label style="display:block; margin-top:15px;">Interazione con i locali:</label>
+            <select id="interaction">
+                <option value="low">Minima (Nessun dialogo parlato)</option>
+                <option value="mid">Moderata (Dialogo superficiale)</option>
+                <option value="high">Massima (Modifica attiva degli eventi)</option>
+            </select>
+
+            <button onclick="runSimulation()">Avvia Calcolo Vettore</button>
+        </div>
+
+        <div id="result-panel">
+            <h3 style="color: var(--neon-red); margin-top:0;">RISULTATO SIMULAZIONE:</h3>
+            <p id="probability-text"></p>
+            <p id="verdict-text"></p>
+        </div>
+    </div>
+
+    <script>
+        function runSimulation() {
+            const action = document.getElementById('action').value;
+            const interaction = document.getElementById('interaction').value;
+            
+            let baseRisk = 0;
+            let verdict = "";
+
+            // Calcolo algoritmico puro in base alle scelte
+            if (action === "1") baseRisk = 25;
+            else if (action === "2") baseRisk = 75;
+            else if (action === "3") baseRisk = 90;
+            else if (action === "4") baseRisk = 10;
+
+            if (interaction === "mid") baseRisk += 10;
+            else if (interaction === "high") baseRisk += 20;
+
+            // Limita il rischio al 100%
+            if (baseRisk > 100) baseRisk = 100;
+
+            if (baseRisk < 30) {
+                verdict = "Linea temporale stabile. Modifica minore accettabile. Autorizzazione concessa.";
+            } else if (baseRisk >= 30 && baseRisk < 70) {
+                verdict = "Rischio Effetto Farfalla moderato. Potresti svegliarti in un presente in cui la pizza non è mai stata inventata. Procedere con cautela.";
+            } else {
+                verdict = "PERICOLO DI COLLASSO! Rischio paradosso del nonno altissimo. Rischio di cancellazione della tua intera linea familiare dal continuum.";
+            }
+
+            document.getElementById('probability-text').innerHTML = `Probabilità di Collasso della Realtà: <strong>${baseRisk}%</strong>`;
+            document.getElementById('verdict-text').innerText = "Verdetto: " + verdict;
+            document.getElementById('result-panel').style.display = "block";
+        }
+    </script>
+</body>
+</html>
