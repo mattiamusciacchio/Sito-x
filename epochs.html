@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Travel Bureau - Destinazioni</title>
+    <style>
+        :root {
+            --neon-blue: #00f0ff;
+            --dark-bg: #0a0f0d;
+            --panel-bg: #111a16;
+            --text-color: #c8f5df;
+        }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        nav {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-around;
+            background: var(--panel-bg);
+            padding: 15px;
+            border: 2px solid var(--neon-blue);
+            margin-bottom: 30px;
+        }
+        nav a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        nav a.active {
+            text-shadow: 0 0 8px var(--neon-blue);
+            border-bottom: 2px solid var(--neon-blue);
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--neon-blue);
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .epoch-select {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+        .epoch-btn {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--neon-blue);
+            padding: 10px 15px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .epoch-btn.active {
+            background: var(--neon-blue);
+            color: var(--dark-bg);
+            font-weight: bold;
+        }
+        .display-panel {
+            background: rgba(0,0,0,0.4);
+            border: 1px dashed var(--neon-blue);
+            padding: 20px;
+            border-radius: 4px;
+        }
+        .danger-rating {
+            font-weight: bold;
+            color: #ff3333;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Terminale</a>
+        <a href="epochs.html" class="active">Destinazioni</a>
+        <a href="paradox.html">Simulatore Paradossi</a>
+    </nav>
+
+    <div class="container">
+        <h1>CATALOGO VETTORI CRONOLOGICI</h1>
+        <p>Seleziona un'epoca d'arrivo per caricare i dettagli di restrizione e i protocolli di mimetismo culturale.</p>
+        
+        <div class="epoch-select">
+            <button class="epoch-btn active" onclick="showEpoch('antichita', this)">44 a.C.</button>
+            <button class="epoch-btn" onclick="showEpoch('rinascimento', this)">1506</button>
+            <button class="epoch-btn" onclick="showEpoch('futuro', this)">2399</button>
+        </div>
+
+        <div id="epoch-content" class="display-panel">
+            </div>
+    </div>
+
+    <script>
+        const data = {
+            antichita: {
+                title: "ROMA ANTICA - IDI DI MARZO",
+                desc: "Destinazione ad alto rischio politico. Coordinate impostate nei pressi del Teatro di Pompeo. Vietato introdurre oggetti in acciaio moderno o smartphone.",
+                danger: "CRITICO (Livello 5/5)",
+                protocol: "Indossare toga di lana grezza, non parlare di democrazia moderna, evitare contatti con Marco Giunio Bruto."
+            },
+            rinascimento: {
+                title: "FIRENZE - LA BOTTEGA DI LEONARDO",
+                desc: "Viaggio ad alto valore culturale. Monitoraggio attivo della produzione artistica. È concesso osservare ma è tassativamente vietato suggerire l'invenzione del motore a scoppio.",
+                danger: "MODERATO (Livello 2/5)",
+                protocol: "Mimetismo in abiti rinascimentali toscani, valuta dell'epoca (fiorini contraffatti forniti al terminale)."
+            },
+            futuro: {
+                title: "NEO-TOKYO - DOPO LA SINGOLARITÀ",
+                desc: "Esplorazione post-umana. La biosfera è satura di micro-droni. Il rischio principale è il tracciamento della firma genetica da parte delle IA governative.",
+                danger: "ELEVATO (Livello 4/5)",
+                protocol: "Installare il chip di mascheramento quantistico sottopelle prima della partenza."
+            }
+        };
+
+        function showEpoch(key, element) {
+            // Rimuove classe attiva dai pulsanti
+            document.querySelectorAll('.epoch-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            // Aggiorna pannello informativo
+            const info = data[key];
+            document.getElementById('epoch-content').innerHTML = `
+                <h2>${info.title}</h2>
+                <p><strong>Descrizione:</strong> ${info.desc}</p>
+                <p><strong>Indice di Pericolo:</strong> <span class="danger-rating">${info.danger}</span></p>
+                <p><strong>Protocollo Obbligatorio:</strong> ${info.protocol}</p>
+            `;
+        }
+
+        // Caricamento iniziale predefinito
+        showEpoch('antichita', document.querySelector('.epoch-btn'));
+    </script>
+</body>
+</html>
